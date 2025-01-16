@@ -1,0 +1,1 @@
+/Users/valkdokk/Desktop/OpenCV-android-sdk/sdk/build/intermediates/cxx/Debug/i6z4n566/obj/x86

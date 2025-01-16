@@ -1,0 +1,3 @@
+/Users/valkdokk/Documents/Projects/eye_hue/android/OpenCV/.cxx/Debug/403a1c61/x86/CMakeFiles/opencv_jni_shared.dir
+/Users/valkdokk/Documents/Projects/eye_hue/android/OpenCV/.cxx/Debug/403a1c61/x86/CMakeFiles/edit_cache.dir
+/Users/valkdokk/Documents/Projects/eye_hue/android/OpenCV/.cxx/Debug/403a1c61/x86/CMakeFiles/rebuild_cache.dir
