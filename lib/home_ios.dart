@@ -19,6 +19,7 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
   double irisScale = 1;
   double irisXRotation = 0;
   double distance = 1;
+  double height = 0;
 
   @override
   void dispose() {
@@ -49,17 +50,17 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
               });
             },
           ),
-          // Text('Iris Scale: $irisScale'),
-          // Slider(
-          //   min: 0.5,
-          //   max: 2,
-          //   value: irisScale,
-          //   onChanged: (v) {
-          //     setState(() {
-          //       irisScale = v;
-          //     });
-          //   },
-          // ),
+          Text('Iris Height: $height'),
+          Slider(
+            min: -1,
+            max: 1,
+            value: height,
+            onChanged: (v) {
+              setState(() {
+                height = v;
+              });
+            },
+          ),
           SizedBox(height: 30),
         ],
       ),
@@ -193,10 +194,11 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
       final rotationMatrix = quaternionToMatrix3(eyeRotation);
       vector.Vector3 forward;
       if (eye == 'left') {
-        forward = vector.Vector3(-distance, 0, -1)
+        forward = vector.Vector3(-distance, height, -1)
           ..applyMatrix3(rotationMatrix);
       } else {
-        forward = vector.Vector3(distance, 0, -1)..applyMatrix3(rotationMatrix);
+        forward = vector.Vector3(distance, height, -1)
+          ..applyMatrix3(rotationMatrix);
       }
       final irisOffset = -forward * 0.005;
       final newIrisPosition = eyePosition + irisOffset;
