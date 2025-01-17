@@ -41,7 +41,7 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
           Text('Eye Distance: $distance'),
           Slider(
             min: -1,
-            max: 1,
+            max: 2,
             value: distance,
             onChanged: (v) {
               setState(() {
