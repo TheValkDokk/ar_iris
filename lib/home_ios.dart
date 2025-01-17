@@ -16,6 +16,10 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
   ARKitNode? leftEye;
   ARKitNode? rightEye;
 
+  double irisScale = 1;
+  double irisXRotation = 0;
+  double distance = 1;
+
   @override
   void dispose() {
     arkitController.dispose();
@@ -26,9 +30,38 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Demo')),
-      body: ARKitSceneView(
-        configuration: ARKitConfiguration.faceTracking,
-        onARKitViewCreated: onARKitViewCreated,
+      body: Column(
+        children: [
+          Expanded(
+            child: ARKitSceneView(
+              configuration: ARKitConfiguration.faceTracking,
+              onARKitViewCreated: onARKitViewCreated,
+            ),
+          ),
+          Text('Eye Distance: $distance'),
+          Slider(
+            min: -1,
+            max: 1,
+            value: distance,
+            onChanged: (v) {
+              setState(() {
+                distance = v;
+              });
+            },
+          ),
+          // Text('Iris Scale: $irisScale'),
+          // Slider(
+          //   min: 0.5,
+          //   max: 2,
+          //   value: irisScale,
+          //   onChanged: (v) {
+          //     setState(() {
+          //       irisScale = v;
+          //     });
+          //   },
+          // ),
+          SizedBox(height: 30),
+        ],
       ),
     );
   }
@@ -65,13 +98,13 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
       ),
     );
 
-    ARKitPlane plane = ARKitPlane(
+    final geo = ARKitPlane(
       materials: [material],
       width: 0.01,
       height: 0.01,
     );
 
-    return ARKitNode(geometry: plane, position: position);
+    return ARKitNode(geometry: geo, position: position);
   }
 
   ARKitNode? getIrisNode(String eye) {
@@ -158,7 +191,13 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
     final irisNode = getIrisNode(eye);
     if (irisNode != null) {
       final rotationMatrix = quaternionToMatrix3(eyeRotation);
-      final forward = vector.Vector3(0, 0, -1)..applyMatrix3(rotationMatrix);
+      vector.Vector3 forward;
+      if (eye == 'left') {
+        forward = vector.Vector3(-distance, 0, -1)
+          ..applyMatrix3(rotationMatrix);
+      } else {
+        forward = vector.Vector3(distance, 0, -1)..applyMatrix3(rotationMatrix);
+      }
       final irisOffset = -forward * 0.005;
       final newIrisPosition = eyePosition + irisOffset;
       irisNode.position = newIrisPosition;
@@ -167,7 +206,12 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
       if (scale < 0.2) {
         irisNode.scale = vector.Vector3(0, 0, 0);
       } else {
-        irisNode.scale = vector.Vector3(scale, scale, scale);
+        final ss = vector.Vector3(
+          scale * irisScale,
+          scale * irisScale,
+          scale,
+        );
+        irisNode.scale = ss;
       }
     }
   }
@@ -183,16 +227,12 @@ class FaceDetectionPageState extends State<FaceDetectionPage> {
     final wy = q.w * q.y;
     final wz = q.w * q.z;
 
-    return vector.Matrix3(
-      1.0 - 2.0 * (yy + zz),
-      2.0 * (xy - wz),
-      2.0 * (xz + wy),
-      2.0 * (xy + wz),
-      1.0 - 2.0 * (xx + zz),
-      2.0 * (yz - wx),
-      2.0 * (xz - wy),
-      2.0 * (yz + wx),
-      1.0 - 2.0 * (xx + yy),
+    final rotationMatrix = vector.Matrix3(
+      1.0 - 2.0 * (yy + zz), 2.0 * (xy - wz), 2.0 * (xz + wy), // 1
+      2.0 * (xy + wz), 1.0 - 2.0 * (xx + zz), 2.0 * (yz - wx), // 2
+      2.0 * (xz - wy), 2.0 * (yz + wx), 1.0 - 2.0 * (xx + yy), // 3
     );
+
+    return rotationMatrix;
   }
 }
