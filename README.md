@@ -1,16 +1,11 @@
-# eye_hue
+# AR Iris - Eye Hue
 
-A new Flutter project.
+AR Iris is a Flutter-based mobile application that uses **ARKit** (iOS) and **ARCore** (Android) to change the iris color and texture in real time using augmented reality technology.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Real-time iris color and texture change using **ARKit** (iOS) and **ARCore** (Android).
+- Utilizes **Flutter** with **MethodChannel** for native AR integration on both iOS and Android platforms.
+- Seamless user experience with smooth rendering for dynamic changes in eye appearance.
+- Fully customizable iris textures and colors for an interactive AR experience.
+- Supports both iOS and Android devices with AR capabilities.
