@@ -10,11 +10,16 @@ class FLNativeView: NSObject, FlutterPlatformView {
         self.containerView = UIView(frame: frame)
         super.init()
         
-        let arViewController = ARViewController()
-        containerView.window?.rootViewController = arViewController
-        containerView.window?.makeKeyAndVisible()
-//        arViewController.view.frame = containerView.bounds
-//        containerView.addSubview(arViewController.view)
+        let arViewController = ARViewController(binaryMessenger: messenger)
+
+        arViewController.view.frame = containerView.bounds
+        arViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        containerView.addSubview(arViewController.view)
+            
+        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+            rootViewController.addChild(arViewController)
+            arViewController.didMove(toParent: rootViewController)
+        }
     }
     
     func view() -> UIView {
