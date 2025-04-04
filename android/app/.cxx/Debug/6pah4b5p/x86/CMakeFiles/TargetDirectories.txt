@@ -1,0 +1,2 @@
+/Users/valkdokk/Documents/Projects/eye_hue/android/app/.cxx/Debug/6pah4b5p/x86/CMakeFiles/edit_cache.dir
+/Users/valkdokk/Documents/Projects/eye_hue/android/app/.cxx/Debug/6pah4b5p/x86/CMakeFiles/rebuild_cache.dir

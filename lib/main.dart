@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:eye_hue/android.dart';
 import 'package:eye_hue/ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
-      home: IosAR(),
+      home: Platform.isIOS ? IosAR() : AndroidAR(),
     );
   }
 }

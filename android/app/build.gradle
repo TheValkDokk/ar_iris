@@ -45,4 +45,6 @@ flutter {
 
 dependencies {
     implementation project(':OpenCV')
+    implementation 'com.google.mediapipe:tasks-vision:0.20230731'
+    implementation 'androidx.camera:camera-lifecycle:1.4.1'
 }
